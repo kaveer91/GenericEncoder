@@ -1,8 +1,8 @@
 1.GenericEncoder:
 ===============
-A wrapper for Lame encoder to convert wav to mp3 files.
-It is a multithreaded application which utilizes cpu cores
-by spawning threads equal to cpu cores and assign each thread 
+A wrapper for Lame encoder to convert wav to mp3 files. The application is developed in a Generic way so that it can be extended easily
+for other types of encoders as well or any other mode of files input.
+It is a multithreaded application which utilizes cpu cores by spawning threads equal to cpu cores and assign each thread 
 an encoder task(convert a wav file to mp3 file).
 
 Programming language used = c++14
