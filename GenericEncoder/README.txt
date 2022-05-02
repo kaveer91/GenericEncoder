@@ -5,7 +5,7 @@ It is a multithreaded application which utilizes cpu cores
 by spawning threads equal to cpu cores and assign each thread 
 an encoder task(convert a wav file to mp3 file).
 
-Programming language used = c++11
+Programming language used = c++14
 
 Development platform = Cygwin.
 
