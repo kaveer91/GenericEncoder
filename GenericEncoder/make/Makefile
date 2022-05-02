@@ -1,0 +1,51 @@
+#########################################################################
+#
+#	PROGRAM TO GENERATE Encoder Application
+#
+#
+###########################################################################
+CC=g++
+CFLAGS=-c -Wall -D_BSD_SOURCE -std=c++14
+OBJECT=../obj/
+SOURCE=../
+OUTPUT=../bin/
+HEAD=-I../Logger/inc/ -I../Framework/Types -I../Reader/inc/ -I../Common/inc/ -I../Encoder/inc/ -I../Framework/ThreadPool/inc/ -I../Framework/Task/ -I../Framework/MessageQueue/inc/ -I../Platform/inc/
+LINK=g++ -o
+LIBS=../Platform/libs/libmp3lame.a -lpthread
+$(OUTPUT)WavToMp3Encoder: $(OBJECT)main.o $(OBJECT)ReadFiles.o $(OBJECT)ReadFilesFromDirectory.o $(OBJECT)TypeDefinitions.o $(OBJECT)Logger.o $(OBJECT)LameWavToMp3Encoder.o $(OBJECT)WavToMp3Encoder.o $(OBJECT)ThreadPool.o $(OBJECT)EncoderTask.o $(LIBS)
+	$(LINK) WavToMp3Encoder $(OBJECT)main.o $(OBJECT)ReadFiles.o $(OBJECT)ReadFilesFromDirectory.o $(OBJECT)TypeDefinitions.o $(OBJECT)Logger.o $(OBJECT)LameWavToMp3Encoder.o $(OBJECT)WavToMp3Encoder.o $(OBJECT)ThreadPool.o $(OBJECT)EncoderTask.o $(LIBS)
+	mkdir -p $(OUTPUT)
+	mv WavToMp3Encoder $(OUTPUT)
+$(OBJECT)main.o: $(SOURCE)Common/src/main.cpp
+	$(CC) $(CFLAGS) $(SOURCE)Common/src/main.cpp $(HEAD)
+	mkdir -p $(OBJECT)
+	mv main.o $(OBJECT)
+$(OBJECT)ReadFiles.o: $(SOURCE)Reader/src/ReadFiles.cpp
+	$(CC) $(CFLAGS) $(SOURCE)Reader/src/ReadFiles.cpp $(HEAD)
+	mv ReadFiles.o $(OBJECT)
+$(OBJECT)ReadFilesFromDirectory.o: $(SOURCE)Reader/src/ReadFilesFromDirectory.cpp
+	$(CC) $(CFLAGS) $(SOURCE)Reader/src/ReadFilesFromDirectory.cpp $(HEAD)
+	mv ReadFilesFromDirectory.o $(OBJECT)
+$(OBJECT)TypeDefinitions.o: $(SOURCE)Common/src/TypeDefinitions.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Common/src/TypeDefinitions.cpp $(HEAD)
+	mv TypeDefinitions.o $(OBJECT)
+$(OBJECT)Logger.o: $(SOURCE)Logger/src/Logger.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Logger/src/Logger.cpp $(HEAD)
+	mv Logger.o $(OBJECT)
+$(OBJECT)WavToMp3Encoder.o: $(SOURCE)Encoder/src/WavToMp3Encoder.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Encoder/src/WavToMp3Encoder.cpp $(HEAD)
+	mv WavToMp3Encoder.o $(OBJECT)
+$(OBJECT)LameWavToMp3Encoder.o: $(SOURCE)Encoder/src/LameWavToMp3Encoder.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Encoder/src/LameWavToMp3Encoder.cpp $(HEAD)
+	mv LameWavToMp3Encoder.o $(OBJECT)	
+$(OBJECT)ThreadPool.o: $(SOURCE)Framework/ThreadPool/src/ThreadPool.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Framework/ThreadPool/src/ThreadPool.cpp $(HEAD)
+	mv ThreadPool.o $(OBJECT)
+$(OBJECT)EncoderTask.o: $(SOURCE)Encoder/src/EncoderTask.cpp 
+	$(CC) $(CFLAGS) $(SOURCE)Encoder/src/EncoderTask.cpp $(HEAD)
+	mv EncoderTask.o $(OBJECT)		
+clean:
+	rm $(OBJECT)*.o
+	rm -r $(OBJECT)
+	rm $(OUTPUT)WavToMp3Encoder
+	rm -r $(OUTPUT)
