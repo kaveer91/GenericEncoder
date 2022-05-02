@@ -51,6 +51,9 @@ $ ls -lstr
 
  To clean
    make clean
+   
+ Note: "GenericEncoder/Platform/libs/libmp3lame.a" is a lame static dependent library. This is only compatible 
+      with cygwin. For Linux please generate one from lame source code and replace it with this one.
 
  Windows:(Note: The below steps are not verified due to windows build environment not available)
  ========
@@ -63,7 +66,9 @@ $ ls -lstr
  To clean
    nmake clean
 
-
+ Note: libmp3lame is static dependent library which should be built on the windows and replaced with the one present(it is cygwin compatible one)
+ under "GenericEncoder/Platform/libs/".
+ 
 5.USAGE:
 ========
 Navigate to the binary folder "./GenericEncoder/bin/" and invoke the binary with foldername as argument
