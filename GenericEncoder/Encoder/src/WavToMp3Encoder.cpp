@@ -31,7 +31,8 @@ void WavToMp3Encoder::Encode(const std::vector<std::string>& listOfFiles)
     LOG(Logger::LOG_LEVEL_DEBUG, std::string("CPU cores preset = ") + std::to_string(std::thread::hardware_concurrency()));
 	
 	//1.Create Threadpool
-	std::shared_ptr<IThreadPool> iThreadPool = std::make_shared<ThreadPool>(std::thread::hardware_concurrency());
+    tU32 numberOfCores = std::thread::hardware_concurrency()? std::thread::hardware_concurrency() : 1;
+    std::shared_ptr<IThreadPool> iThreadPool = std::make_shared<ThreadPool>(numberOfCores);
     iThreadPool->Create();
 
     //2.Create task for each file and assign to ThreadPool
