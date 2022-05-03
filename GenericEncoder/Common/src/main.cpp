@@ -36,8 +36,8 @@ tS32 main(tS32 argumentCount, char* argument[])
 			try
 			{
 			    LOG(Logger::LOG_LEVEL_INFO, "Found " + std::to_string(listOfMatchedFiles.size())+" files for encoding");
-		        std::shared_ptr<IEncoder> iEncoder = std::make_shared<LameWavToMp3Encoder>();	
-		        iEncoder->Encode(listOfMatchedFiles);
+                std::shared_ptr<IEncoder> iEncoder = std::make_shared<LameWavToMp3Encoder>();	
+                iEncoder->Encode(listOfMatchedFiles);
 			}
 			catch(const std::exception& xception)
 		    { 
