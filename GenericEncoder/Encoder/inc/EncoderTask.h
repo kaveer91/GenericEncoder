@@ -15,7 +15,7 @@ public:
 private:
     IEncoder* iEncoder;
     std::string inputFileName;
-	std::string outputFileName;
+    std::string outputFileName;
 };
 
 #endif

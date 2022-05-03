@@ -21,7 +21,7 @@ typedef size_t tSize_t;
 
 typedef enum 
 {
-	GE_NO_ERROR = 0,
+    GE_NO_ERROR = 0,
 }tReturnCode;
 
 typedef tReturnCode tResult;

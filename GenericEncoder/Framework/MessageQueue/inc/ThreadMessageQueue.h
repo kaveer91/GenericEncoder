@@ -16,45 +16,45 @@ class ThreadMessageQueue : public IMessageQueue<T>
 {
 public:
     ThreadMessageQueue();
-	~ThreadMessageQueue();
-	void Push(T message);
-	T WaitAndPop(tU32 timeoutInMilliSeconds);
-	
+    ~ThreadMessageQueue();
+    void Push(T message);
+    T WaitAndPop(tU32 timeoutInMilliSeconds);
+    
 protected:
 
     void ReleaseMessageWait();
-	tBool WaitForMessage(const tU32 timeoutInMilliSeconds);
-	T Pop();
-	
-private:	
+    tBool WaitForMessage(const tU32 timeoutInMilliSeconds);
+    T Pop();
+    
+private:    
     std::mutex messageQueueMutex;
-	sem_t messageCountSemaphore;
-	std::queue <T> messageQueue;
+    sem_t messageCountSemaphore;
+    std::queue <T> messageQueue;
 };
 
 
 template<typename T>
 ThreadMessageQueue<T>::ThreadMessageQueue()
 {
-	memset(&messageCountSemaphore, 0, sizeof(messageCountSemaphore));
-	sem_init(&messageCountSemaphore, 0, 0);
+    memset(&messageCountSemaphore, 0, sizeof(messageCountSemaphore));
+    sem_init(&messageCountSemaphore, 0, 0);
 }
 
 
 template<typename T>
 ThreadMessageQueue<T>::~ThreadMessageQueue()
 {
-	sem_destroy(&messageCountSemaphore);
+    sem_destroy(&messageCountSemaphore);
 }
 
 template<typename T>
 void ThreadMessageQueue<T>::Push(T message)
 {
-	messageQueueMutex.lock();
-	messageQueue.push(message);
-	messageQueueMutex.unlock();
-	
-	ReleaseMessageWait();
+    messageQueueMutex.lock();
+    messageQueue.push(message);
+    messageQueueMutex.unlock();
+    
+    ReleaseMessageWait();
 }
 
 template<typename T>
@@ -66,52 +66,52 @@ void ThreadMessageQueue<T>::ReleaseMessageWait()
 template<typename T>
 T ThreadMessageQueue<T>::WaitAndPop(const tU32 timeoutInMilliSeconds)
 {
-	T message;
+    T message;
  
-    bool isMessageAvailable = WaitForMessage(timeoutInMilliSeconds);	 
-	if(isMessageAvailable)
-	{
+    bool isMessageAvailable = WaitForMessage(timeoutInMilliSeconds);     
+    if(isMessageAvailable)
+    {
          message = Pop();
-	}
-	
-	return message;
+    }
+    
+    return message;
 }
 
 template<typename T>
 tBool ThreadMessageQueue<T>::WaitForMessage(tU32 timeoutInMilliSeconds)
 {
-	tBool isMessageAvailable = false;
-	
-	struct timespec timeout;
+    tBool isMessageAvailable = false;
+    
+    struct timespec timeout;
     clock_gettime(CLOCK_REALTIME, &timeout);
     timeout.tv_sec += timeoutInMilliSeconds/1000;
 
-	int errorCode = sem_timedwait(&messageCountSemaphore, &timeout);
-	
-	if(0 == errorCode)
-	{
-		isMessageAvailable = true;
-	}
-	
-	return isMessageAvailable;
+    int errorCode = sem_timedwait(&messageCountSemaphore, &timeout);
+    
+    if(0 == errorCode)
+    {
+        isMessageAvailable = true;
+    }
+    
+    return isMessageAvailable;
 }
 
 template<typename T>
 T ThreadMessageQueue<T>::Pop()
 {
-	T message;
-	messageQueueMutex.lock();
-	if(!messageQueue.empty())
-	{
+    T message;
+    messageQueueMutex.lock();
+    if(!messageQueue.empty())
+    {
         message = messageQueue.front();
         messageQueue.pop();
         messageQueueMutex.unlock();
-	}
-	else
-    {
-		messageQueueMutex.unlock();
     }
-		 
+    else
+    {
+        messageQueueMutex.unlock();
+    }
+         
     return message;
 }
 

@@ -7,17 +7,17 @@
 EncoderTask::EncoderTask(IEncoder* iEncoder, const std::string& inputFileName, const std::string& outputFileName):
 iEncoder(iEncoder), inputFileName(inputFileName), outputFileName(outputFileName)
 {
-	
+    
 }
 
 void EncoderTask::Execute()
 {
-	try 
-	{
-	    iEncoder->Encode(inputFileName, outputFileName);
-	}
-	catch(const std::exception& xception)
-	{
-		LOG(Logger::LOG_LEVEL_FATAL, std::string("Exception: ") + xception.what() + ": caught while encoding file " +inputFileName);
-	}
+    try 
+    {
+        iEncoder->Encode(inputFileName, outputFileName);
+    }
+    catch(const std::exception& xception)
+    {
+        LOG(Logger::LOG_LEVEL_FATAL, std::string("Exception: ") + xception.what() + ": caught while encoding file " +inputFileName);
+    }
 }

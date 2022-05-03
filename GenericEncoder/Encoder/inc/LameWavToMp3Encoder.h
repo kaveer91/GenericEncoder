@@ -4,9 +4,9 @@
 #include "WavToMp3Encoder.h"
 
 class LameWavToMp3Encoder : public WavToMp3Encoder
-{	
+{    
 public:
-	void Encode(const std::string& sourceWavFilePath, const std::string& destinationMp3FilePath);
+    void Encode(const std::string& sourceWavFilePath, const std::string& destinationMp3FilePath);
     std::string GetVersion();
 };
 

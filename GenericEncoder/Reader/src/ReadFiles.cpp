@@ -6,38 +6,38 @@
 
 std::string ReadFiles::GetFileExtension(const std::string& fileName)
 {
-	std::string fileExtension;
-	if(!fileName.empty())
+    std::string fileExtension;
+    if(!fileName.empty())
     {
         auto positionOfDot = fileName.find_last_of('.');
-	    if(std::string::npos != positionOfDot)
+        if(std::string::npos != positionOfDot)
         {
             fileExtension = fileName.substr(positionOfDot);
             std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
         }
-	    else
+        else
         {
             LOG(Logger::LOG_LEVEL_ERROR, "Invalid file name. Not able to find extension");
         }
     }
-	return fileExtension;
+    return fileExtension;
 }
 
 tBool ReadFiles::IsFileExtensionMatching(const std::string& fileName, Extension extensionToRead)
 {
     tBool isMatching = false;
-	std::string fileExtension = GetFileExtension(fileName);
+    std::string fileExtension = GetFileExtension(fileName);
     if(!fileExtension.empty())
     {
-	    if(fileExtension == mapToFileExtension.find(extensionToRead)->second)
-		{
-			isMatching = true;
-		}
-		else
-		{
-			std::string errorMessage = std::string("File extension not matching for file : ") + fileName;
-			LOG(Logger::LOG_LEVEL_DEBUG, errorMessage);
-		}
-    }	
-	return isMatching;
+        if(fileExtension == mapToFileExtension.find(extensionToRead)->second)
+        {
+            isMatching = true;
+        }
+        else
+        {
+            std::string errorMessage = std::string("File extension not matching for file : ") + fileName;
+            LOG(Logger::LOG_LEVEL_DEBUG, errorMessage);
+        }
+    }    
+    return isMatching;
 }

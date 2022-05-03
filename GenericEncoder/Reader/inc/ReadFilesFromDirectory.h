@@ -10,10 +10,10 @@ class ReadFilesFromDirectory : public ReadFiles
 {
 public:
     ReadFilesFromDirectory();
-	
-	std::vector<std::string> Read(const std::string& absolutePath, DIR* dir, Extension extensionToRead);
+    
+    std::vector<std::string> Read(const std::string& absolutePath, DIR* dir, Extension extensionToRead);
 
-	std::vector<std::string> Read(const std::string& absolutePath, Extension extensionToRead);
+    std::vector<std::string> Read(const std::string& absolutePath, Extension extensionToRead);
 };
 
 #endif

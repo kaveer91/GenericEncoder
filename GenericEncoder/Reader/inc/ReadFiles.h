@@ -8,12 +8,12 @@
 class ReadFiles : public IReadFiles
 {
 public:
-	std::vector<std::string> Read(const std::string&, Extension) = 0;
-	
+    std::vector<std::string> Read(const std::string&, Extension) = 0;
+    
 protected:
 
     std::string GetFileExtension(const std::string& fileName);
-	
+    
     tBool IsFileExtensionMatching(const std::string& fileName, Extension extensionToRead);
 };
 
